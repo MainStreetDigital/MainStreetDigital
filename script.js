@@ -87,17 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Basic Contact Form Handling (Placeholder)
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            // Implement actual form submission here (e.g., using Fetch API to a backend or Formspree)
-            alert('Message sent! Thank you for your vision.');
-            this.reset();
-        });
-    }
-
     // Optional: Add 'active' class to nav links on scroll
     const sections = document.querySelectorAll('section[id]');
     const navLi = document.querySelectorAll('header nav ul li a');
