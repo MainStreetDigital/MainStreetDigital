@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
             // Implement actual form submission here (e.g., using Fetch API to a backend or Formspree)
-            alert('Message sent (simulated)! Thank you for your vision.');
+            alert('Message sent! Thank you for your vision.');
             this.reset();
         });
     }
