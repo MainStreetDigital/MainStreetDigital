@@ -1,0 +1,750 @@
+﻿/* Global Resets & Base Styles */
+:root {
+    --bg-color: #1a102c; /* Deep dark purple/blue */
+    --primary-text-color: #e0e0e0;
+    --secondary-text-color: #b0a8c9;
+    --accent-color: #00f2ea; /* Electric Cyan/Teal */
+    --accent-color-secondary: #ff00aa; /* Vibrant Magenta/Pink */
+    --card-bg: #2a1a47; /* Slightly lighter purple for cards */
+    --border-color: rgba(0, 242, 234, 0.2);
+    --font-display: 'Orbitron', sans-serif;
+    --font-body: 'Poppins', sans-serif;
+    --container-width: 1140px;
+    --border-radius: 12px;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    --glow-shadow: 0 0 15px var(--accent-color), 0 0 30px var(--accent-color-secondary);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px; /* Base font size */
+}
+
+body {
+    font-family: var(--font-body);
+    line-height: 1.7;
+    color: var(--primary-text-color);
+    background-color: var(--bg-color);
+    overflow-x: hidden; /* Prevent horizontal scroll from AOS */
+    /* Optional: subtle abstract background */
+    /* background-image: url('images/abstract-bg.svg');
+    background-size: cover;
+    background-attachment: fixed; */
+}
+
+/* Custom Cursor */
+.cursor-dot, .cursor-outline {
+    pointer-events: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease-in-out, transform 0.2s ease-in-out;
+    z-index: 9999;
+}
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent-color);
+}
+
+.cursor-outline {
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--accent-color-secondary);
+    transition-duration: 0.1s; /* Faster follow for outline */
+}
+
+body:hover .cursor-dot, body:hover .cursor-outline {
+    opacity: 1;
+}
+
+/* Hide default cursor on interactive elements if custom cursor is active */
+a, button, .nav-item, .service-card, .form-input {
+    cursor: none; /* Or your custom cursor image */
+}
+/* You might need to be more specific if default cursor still shows */
+
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 25px;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.7em;
+    line-height: 1.2;
+    letter-spacing: 1px;
+}
+
+h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+h3 {
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    color: var(--accent-color);
+}
+
+p {
+    margin-bottom: 1.5em;
+    color: var(--secondary-text-color);
+    font-size: 1rem;
+}
+
+.highlight {
+    color: var(--accent-color);
+    text-shadow: 0 0 8px var(--accent-color);
+}
+
+a {
+    text-decoration: none;
+    color: var(--accent-color-secondary);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+    a:hover, .nav-item:hover {
+        color: var(--accent-color);
+        text-shadow: 0 0 5px var(--accent-color);
+    }
+
+section {
+    padding: 100px 0;
+    position: relative;
+}
+
+/* Header & Navigation */
+header {
+    background-color: rgba(26, 16, 44, 0.8); /* Semi-transparent bg */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+    .logo img {
+        max-height: 40px;
+    }
+
+    .logo:hover {
+        color: #fff;
+        text-shadow: var(--glow-shadow);
+    }
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+    .nav-links li {
+        margin-left: 35px;
+    }
+
+    .nav-links a {
+        color: var(--primary-text-color);
+        font-weight: 400;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+        position: relative;
+        padding-bottom: 5px;
+    }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.4s ease;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+.cta-button {
+    background: linear-gradient(135deg, var(--accent-color), var(--accent-color-secondary));
+    color: var(--bg-color) !important;
+    padding: 12px 28px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 242, 234, 0.3);
+    border: none;
+}
+
+    .cta-button:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 8px 20px rgba(255, 0, 170, 0.4), 0 0 15px var(--accent-color);
+        color: var(--bg-color) !important; /* Maintain text color on hover */
+        text-shadow: none;
+    }
+
+    .cta-button i {
+        margin-left: 8px;
+    }
+
+.mobile-nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--primary-text-color);
+    cursor: pointer;
+}
+
+/* Hero Section */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 120px; /* For fixed header */
+    /* background: radial-gradient(ellipse at bottom, var(--card-bg) 0%, var(--bg-color) 70%); */
+    overflow: hidden; /* For AOS animations */
+}
+
+    .hero-section .subtitle {
+        font-size: clamp(1rem, 2.5vw, 1.3rem);
+        margin-bottom: 40px;
+        color: var(--secondary-text-color);
+    }
+
+        .hero-section .subtitle strong {
+            color: var(--accent-color-secondary);
+            font-weight: 600;
+        }
+
+.hero-cta {
+    font-size: 1.1rem;
+    padding: 15px 35px;
+}
+
+.scroll-down-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+}
+
+    .scroll-down-indicator a {
+        color: var(--accent-color);
+        animation: bounce 2s infinite;
+    }
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10px);
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Vision Section */
+.vision-section {
+    background-color: var(--card-bg);
+}
+
+.vision-content {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.vision-text {
+    flex: 1;
+}
+
+.vision-visual {
+    flex-basis: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.abstract-shape {
+    width: 200px;
+    height: 200px;
+    animation: rotateShape 20s linear infinite;
+}
+
+    .abstract-shape path, .abstract-shape circle {
+        animation: pulseStroke 5s ease-in-out infinite alternate;
+    }
+
+@keyframes rotateShape {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulseStroke {
+    0% {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+        opacity: 0.5;
+    }
+
+    50% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+
+    100% {
+        stroke-dashoffset: -1000;
+        opacity: 0.5;
+    }
+}
+
+
+/* Services Section */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.service-card {
+    background-color: var(--card-bg);
+    padding: 35px 30px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    text-align: center;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+    .service-card::before { /* Glow effect on hover */
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
+        border-radius: 50%;
+        opacity: 0;
+        transform: translate(-50%, -50%);
+        transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+        z-index: 0;
+    }
+
+    .service-card:hover::before {
+        width: 300px; /* Adjust size of glow */
+        height: 300px;
+        opacity: 0.2;
+    }
+
+    .service-card:hover {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 0 25px rgba(0, 242, 234, 0.3), 0 0 10px var(--accent-color-secondary) inset;
+    }
+
+    .service-card i {
+        font-size: 2.8rem;
+        color: var(--accent-color-secondary);
+        margin-bottom: 20px;
+        display: block;
+        transition: transform 0.3s ease;
+    }
+
+    .service-card:hover i {
+        transform: scale(1.1) rotate(-5deg);
+    }
+
+    .service-card h3, .service-card p {
+        position: relative;
+        z-index: 1;
+    }
+/* Ensure text is above glow */
+
+/* Approach/Pricing Section */
+.approach-section {
+    background-color: var(--bg-color); /* Same as body for seamless feel */
+}
+
+.approach-intro, .approach-outro {
+    text-align: center;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.1rem;
+}
+
+.pricing-focus-box {
+    background: linear-gradient(145deg, var(--card-bg), #22153c);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--accent-color);
+    box-shadow: var(--shadow), 0 0 30px var(--accent-color-secondary) inset;
+    max-width: 550px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.price-tag {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 4.5rem);
+    font-weight: 900;
+    color: var(--accent-color);
+    margin-bottom: 5px;
+    line-height: 1;
+}
+
+    .price-tag .per-month {
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--secondary-text-color);
+        display: block;
+    }
+
+.no-upfront-emphasis {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent-color-secondary);
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 2px dashed var(--accent-color-secondary);
+    padding: 8px 15px;
+    display: inline-block;
+    border-radius: 8px;
+}
+
+.pricing-focus-box ul {
+    list-style: none;
+    margin-bottom: 35px;
+    text-align: left;
+    display: inline-block;
+}
+
+    .pricing-focus-box ul li {
+        margin-bottom: 12px;
+        color: var(--primary-text-color);
+        font-size: 1rem;
+    }
+
+        .pricing-focus-box ul li i {
+            color: var(--accent-color);
+            margin-right: 12px;
+        }
+
+/* Contact Section */
+.contact-section {
+    background-color: var(--card-bg);
+}
+
+#contact-form .form-group {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 15px 18px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    background-color: rgba(26, 16, 44, 0.7); /* Slightly transparent input */
+    color: var(--primary-text-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .form-input::placeholder {
+        color: var(--secondary-text-color);
+        opacity: 0.7;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 10px var(--accent-color);
+    }
+
+#contact-form textarea {
+    margin-bottom: 25px;
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-submit {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 15px;
+}
+
+.contact-alternative {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 1rem;
+}
+
+/* Fixed CTA Strip */
+.fixed-cta-strip {
+    position: fixed;
+    bottom: 30px; /* Or top: 50%; transform: translateY(-50%); */
+    right: -100px; /* Start off-screen for animation */
+    background: linear-gradient(135deg, var(--accent-color), var(--accent-color-secondary));
+    color: var(--bg-color);
+    padding: 10px 15px 10px 20px;
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+    box-shadow: -5px 5px 15px rgba(0,0,0,0.3);
+    z-index: 999;
+    transition: right 0.5s ease-out; /* For JS control if needed */
+    writing-mode: vertical-rl; /* If you want it vertical */
+    text-orientation: mixed;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .fixed-cta-strip.aos-animate { /* AOS will handle bringing it in */
+        right: 0;
+    }
+
+    .fixed-cta-strip a {
+        color: var(--bg-color);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        writing-mode: horizontal-tb; /* override parent for text */
+    }
+
+    .fixed-cta-strip .text {
+        margin-right: 8px;
+    }
+
+    .fixed-cta-strip .icon i {
+        font-size: 1.2rem;
+    }
+
+    .fixed-cta-strip:hover {
+        filter: brightness(1.2);
+    }
+
+
+/* Footer */
+footer {
+    background-color: #120c1f; /* Even darker */
+    color: var(--secondary-text-color);
+    padding: 40px 0;
+    text-align: center;
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-color);
+}
+
+    footer p {
+        margin-bottom: 0;
+    }
+
+    footer .fa-heart {
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    footer:hover .fa-heart {
+        color: var(--accent-color-secondary) !important;
+        transform: scale(1.2);
+    }
+
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .vision-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .vision-visual {
+        margin-top: 30px;
+    }
+
+    .abstract-shape {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    section {
+        padding: 80px 0;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 75px; /* Adjust based on header height */
+        left: 0;
+        background-color: var(--card-bg);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        border-top: 1px solid var(--border-color);
+    }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 0;
+            text-align: center;
+        }
+
+            .nav-links li a {
+                display: block;
+                padding: 18px;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .nav-links li:last-child a {
+                border-bottom: none;
+            }
+
+        .nav-links .nav-cta {
+            margin: 15px auto;
+            display: inline-block;
+            width: auto;
+        }
+
+    .mobile-nav-toggle {
+        display: block;
+    }
+
+    #contact-form .form-group {
+        flex-direction: column;
+        gap: 0;
+    }
+
+        #contact-form .form-group input {
+            margin-bottom: 25px;
+        }
+
+            #contact-form .form-group input:last-child {
+                margin-bottom: 0;
+            }
+
+    .fixed-cta-strip {
+        /* Optional: Change behavior on small screens */
+        /* display: none; */ /* or make it smaller */
+        padding: 8px 10px 8px 15px;
+        bottom: 20px;
+    }
+
+        .fixed-cta-strip .text {
+            font-size: 0.8rem;
+        }
+
+        .fixed-cta-strip .icon i {
+            font-size: 1rem;
+        }
+}
+
+@media (max-width: 480px) {
+    .hero-section .subtitle {
+        font-size: 1rem;
+    }
+
+    .pricing-focus-box {
+        padding: 30px 20px;
+    }
+
+    .price-tag {
+        font-size: 2.8rem;
+    }
+
+    .no-upfront-emphasis {
+        font-size: 1rem;
+        padding: 6px 10px;
+    }
+
+    .fixed-cta-strip {
+        /* Even smaller or different position */
+        bottom: 10px;
+        right: -80px; /* Adjust initial off-screen position for smaller animation */
+    }
+
+        .fixed-cta-strip.aos-animate {
+            right: 0;
+        }
+}
+
+/* Hide custom cursor on touch devices to prevent double cursors */
+@media (hover: none) and (pointer: coarse) {
+    .cursor-dot, .cursor-outline {
+        display: none !important;
+    }
+
+    a, button, .nav-item, .service-card, .form-input {
+        cursor: default; /* Revert to default cursor */
+    }
+}
